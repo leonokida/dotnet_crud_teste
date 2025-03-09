@@ -1,0 +1,10 @@
+@model MeuProjetoMVC.Models.Produto
+
+<h1>Excluir Produto</h1>
+
+<p>Tem certeza de que deseja excluir <strong>@Model.dscProduto</strong>?</p>
+
+<form method="post" action="/Produto/ConfirmarDelecao/@Model.idProduto">
+    <button type="submit">Sim, Excluir</button>
+    <a href="/Produto">Cancelar</a>
+</form>

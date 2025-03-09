@@ -1,0 +1,28 @@
+@model List<MeuProjetoMVC.Models.Venda>
+
+<h1>Lista de Vendas</h1>
+
+<a href="/Venda/Criar">Registrar Venda</a>
+
+@if (Model.Count > 0)
+{
+    <ul>
+        @foreach (var venda in Model)
+        {
+            <li>
+                Data: @venda.dthVenda <br>
+                Cliente: @venda.Cliente.nmCliente <br>
+                Produto: @venda.Produto.dscProduto <br>
+                Valor Unitário: @venda.vlrUnitarioVenda <br>
+                Quantidade: @venda.qtdVenda <br>
+                Valor Total: @venda.vlrTotalVenda <br>
+                <a href="/Venda/Editar/@venda.idVenda">Editar</a>
+                <a href="/Venda/Deletar/@venda.idVenda">Excluir</a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Nenhuma venda registrada.</p>
+}

@@ -1,0 +1,24 @@
+@model List<MeuProjetoMVC.Models.Produto>
+
+<h1>Lista de Produtos</h1>
+
+<a href="/Produto/Criar">Adicionar Produto</a>
+
+@if (Model.Count > 0)
+{
+    <ul>
+        @foreach (var produto in Model)
+        {
+            <li>
+                Nome: @produto.dscProduto <br>
+                Valor Unitário: R$ @produto.vlrUnitario <br>
+                <a href="/Produto/Editar/@produto.idProduto">Editar</a>
+                <a href="/Produto/Deletar/@produto.idProduto">Excluir</a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Nenhum produto cadastrado.</p>
+}

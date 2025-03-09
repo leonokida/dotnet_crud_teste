@@ -1,0 +1,18 @@
+@model MeuProjetoMVC.Models.Cliente
+
+<h1>Editar Cliente</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="idCliente" />
+
+    <label>Nome:</label>
+    <input type="text" asp-for="nmCliente" required />
+    <br />
+    
+    <label>Cidade:</label>
+    <input type="text" asp-for="cidade" required />
+    <br />
+
+    <button type="submit">Salvar</button>
+    <a href="/Cliente">Cancelar</a>
+</form>

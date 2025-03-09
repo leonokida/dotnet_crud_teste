@@ -1,0 +1,10 @@
+@model MeuProjetoMVC.Models.Cliente
+
+<h1>Excluir Cliente</h1>
+
+<p>Tem certeza de que deseja excluir <strong>@Model.nmCliente</strong>?</p>
+
+<form method="post" action="/Cliente/ConfirmarDelecao/@Model.idCliente">
+    <button type="submit">Sim, Excluir</button>
+    <a href="/Cliente">Cancelar</a>
+</form>

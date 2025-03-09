@@ -1,0 +1,24 @@
+@model MeuProjetoMVC.Models.Venda
+
+<h1>Registrar Nova Venda</h1>
+
+<form method="post">
+    <label>Cliente:</label>
+    <select asp-for="idCliente" asp-items="ViewBag.Clientes">
+        <option value="">Selecione um Cliente</option>
+    </select>
+    <br />
+
+    <label>Produto:</label>
+    <select asp-for="idProduto" asp-items="ViewBag.Produtos">
+        <option value="">Selecione um Produto</option>
+    </select>
+    <br />
+
+    <label>Quantidade:</label>
+    <input type="number" asp-for="qtdVenda" required />
+    <br />
+
+    <button type="submit">Salvar Venda</button>
+    <a href="/Venda">Cancelar</a>
+</form>

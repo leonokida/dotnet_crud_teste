@@ -11,10 +11,16 @@ namespace MeuProjetoMVC.Controllers {
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            var produtos = _context.Produtos.ToList();
-            return View(produtos);
+            var produtos = _context.Produtos.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                produtos = produtos.Where(p => p.dscProduto.Contains(search));
+            }
+
+            return View(produtos.ToList());
         }
 
         // Criar produto - Formulário

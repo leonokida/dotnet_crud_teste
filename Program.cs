@@ -1,4 +1,5 @@
 using MeuProjetoMVC.Data;
+using MeuProjetoMVC.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=projeto.db"));
+
+builder.Services.AddHttpClient<ProdutoService>();
+builder.Services.AddHttpClient<ClienteService>();
+builder.Services.AddHttpClient<VendaService>();
 
 var app = builder.Build();
 

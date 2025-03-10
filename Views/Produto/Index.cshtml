@@ -1,8 +1,16 @@
 @model List<MeuProjetoMVC.Models.Produto>
+@{
+    ViewData["Title"] = "Produtos";
+}
 
 <h1>Lista de Produtos</h1>
 
 <a href="/Produto/Criar">Adicionar Produto</a>
+
+<form method="get" action="/Produto/Index">
+    <input type="text" name="search" placeholder="Pesquisar por nome" value="@Context.Request.Query["search"]" />
+    <button type="submit">Buscar</button>
+</form>
 
 @if (Model.Count > 0)
 {

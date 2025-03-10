@@ -13,13 +13,19 @@ namespace MeuProjetoMVC.Controllers {
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
             var vendas = _context.Vendas
                 .Include(v => v.Cliente)
                 .Include(v => v.Produto)
-                .ToList();
-            return View(vendas);
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                vendas = vendas.Where(v => v.Produto.dscProduto.Contains(search) || v.Cliente.nmCliente.Contains(search));
+            }
+
+            return View(vendas.ToList());
         }
 
         // Criar venda - Formulário

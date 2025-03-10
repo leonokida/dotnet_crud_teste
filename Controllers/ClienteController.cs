@@ -11,10 +11,16 @@ namespace MeuProjetoMVC.Controllers {
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            var clientes = _context.Clientes.ToList();
-            return View(clientes);
+            var clientes = _context.Clientes.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                clientes = clientes.Where(c => c.nmCliente.Contains(search));
+            }
+
+            return View(clientes.ToList());
         }
 
         // Criar cliente - Formulário

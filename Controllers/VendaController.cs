@@ -19,7 +19,7 @@ namespace MeuProjetoMVC.Controllers {
         public async Task<IActionResult> Index(string search)
         {
             // Carrega vendas do endpoint
-            if (!_context.Produtos.Any())
+            if (!_context.Vendas.Any())
             {
                 var vendasExternas = await _vendaService.ObterVendasAsync();
 
@@ -27,6 +27,13 @@ namespace MeuProjetoMVC.Controllers {
                 {
                     if (!_context.Vendas.Any(v => v.idVenda == venda.idVenda))
                     {
+                        var cliente = _context.Clientes.Find(venda.idCliente);
+                        var produto = _context.Produtos.Find(venda.idProduto);
+                        _context.Clientes.Attach(cliente);
+                        _context.Produtos.Attach(produto);
+                        venda.Cliente = cliente;
+                        venda.Produto = produto;
+                        venda.vlrTotalVenda = venda.vlrUnitarioVenda * venda.qtdVenda;
                         _context.Vendas.Add(venda);
                     }
                 }

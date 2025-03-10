@@ -1,8 +1,8 @@
 using MeuProjetoMVC.Models;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace MeuProjetoMVC.Services
 {
@@ -19,7 +19,7 @@ namespace MeuProjetoMVC.Services
         public async Task<List<Produto>> ObterProdutosAsync()
         {
             var resposta = await _httpClient.GetStringAsync(apiUrl);
-            return JsonSerializer.Deserialize<List<Produto>>(resposta, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return JsonConvert.DeserializeObject<List<Produto>>(JsonConvert.DeserializeObject<string>(resposta));
         }
     }
 }

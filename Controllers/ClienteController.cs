@@ -1,18 +1,38 @@
 using MeuProjetoMVC.Data;
 using MeuProjetoMVC.Models;
+using MeuProjetoMVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace MeuProjetoMVC.Controllers {
     public class ClienteController : Controller {
         private readonly AppDbContext _context;
+        private readonly ClienteService _clienteService;
 
-        public ClienteController(AppDbContext context) {
+        public ClienteController(ClienteService clienteService, AppDbContext context)
+        {
+            _clienteService = clienteService;
             _context = context;
         }
 
-        public IActionResult Index(string search)
+        public async Task<IActionResult> Index(string search)
         {
+            // Carrega clientes do endpoint
+            if (!_context.Clientes.Any())
+            {
+                var clientesExternos = await _clienteService.ObterClientesAsync();
+
+                foreach (var cliente in clientesExternos)
+                {
+                    if (!_context.Clientes.Any(c => c.idCliente == cliente.idCliente))
+                    {
+                        _context.Clientes.Add(cliente);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
             var clientes = _context.Clientes.AsQueryable();
 
             if (!string.IsNullOrEmpty(search))

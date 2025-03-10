@@ -14,21 +14,37 @@
 
 @if (Model.Count > 0)
 {
-    <ul>
-        @foreach (var venda in Model)
-        {
-            <li>
-                Data: @venda.dthVenda <br>
-                Cliente: @venda.Cliente.nmCliente <br>
-                Produto: @venda.Produto.dscProduto <br>
-                Valor Unitário: @venda.vlrUnitarioVenda <br>
-                Quantidade: @venda.qtdVenda <br>
-                Valor Total: @venda.vlrTotalVenda <br>
-                <a href="/Venda/Editar/@venda.idVenda">Editar</a>
-                <a href="/Venda/Deletar/@venda.idVenda">Excluir</a>
-            </li>
-        }
-    </ul>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Cliente</th>
+                <th>Produto</th>
+                <th>Valor Unitário</th>
+                <th>Quantidade</th>
+                <th>Valor Total</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var venda in Model)
+            {
+                <tr>
+                    <td>@venda.dthVenda</td>
+                    <td>@venda.Cliente.nmCliente</td>
+                    <td>@venda.Produto.dscProduto</td>
+                    <td>@venda.vlrUnitarioVenda</td>
+                    <td>@venda.qtdVenda</td>
+                    <td>@venda.vlrTotalVenda</td>
+                    <td>
+                        <a href="/Venda/Editar/@venda.idVenda">Editar</a> |
+                        <a href="/Venda/Deletar/@venda.idVenda">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 }
 else
 {

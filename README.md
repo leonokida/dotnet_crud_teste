@@ -5,7 +5,7 @@ Essa aplicação foi desenvolvida em ASP .NET MVC. Foi utilizada a versão 9.0 d
 - Dados obtidos de endpoints.
 - Página de Clientes, Produtos e Vendas.
 - Adição, Edição e Remoção.
-- Função de busca nas páginas de index.
+- Função de busca nas páginas de index (a busca é case-sensitive).
 
 ## Informações importantes
 - Utilizei o SQLite como banco de dados para implementar rapidamente a aplicação.

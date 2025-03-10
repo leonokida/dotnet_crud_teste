@@ -16,7 +16,7 @@ namespace MeuProjetoMVC.Services
             _httpClient = httpClient;
         }
 
-        public async Task<List<Venda>> ObterProdutosAsync()
+        public async Task<List<Venda>> ObterVendasAsync()
         {
             var resposta = await _httpClient.GetStringAsync(apiUrl);
             return JsonSerializer.Deserialize<List<Venda>>(resposta, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });

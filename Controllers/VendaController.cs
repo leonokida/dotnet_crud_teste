@@ -1,5 +1,6 @@
 using MeuProjetoMVC.Data;
 using MeuProjetoMVC.Models;
+using MeuProjetoMVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,13 +9,31 @@ using System.Linq;
 namespace MeuProjetoMVC.Controllers {
     public class VendaController : Controller {
         private readonly AppDbContext _context;
+        private readonly VendaService _vendaService;
 
-        public VendaController(AppDbContext context) {
+        public VendaController(VendaService vendaService, AppDbContext context) {
             _context = context;
+            _vendaService = vendaService;
         }
 
-        public IActionResult Index(string search)
+        public async Task<IActionResult> Index(string search)
         {
+            // Carrega vendas do endpoint
+            if (!_context.Produtos.Any())
+            {
+                var vendasExternas = await _vendaService.ObterVendasAsync();
+
+                foreach (var venda in vendasExternas)
+                {
+                    if (!_context.Vendas.Any(v => v.idVenda == venda.idVenda))
+                    {
+                        _context.Vendas.Add(venda);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
             var vendas = _context.Vendas
                 .Include(v => v.Cliente)
                 .Include(v => v.Produto)

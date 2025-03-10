@@ -1,18 +1,37 @@
 using MeuProjetoMVC.Data;
 using MeuProjetoMVC.Models;
+using MeuProjetoMVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace MeuProjetoMVC.Controllers {
     public class ProdutoController : Controller {
         private readonly AppDbContext _context;
+        private readonly ProdutoService _produtoService;
 
-        public ProdutoController(AppDbContext context) {
+        public ProdutoController(ProdutoService produtoService, AppDbContext context) {
+            _produtoService = produtoService;
             _context = context;
         }
 
-        public IActionResult Index(string search)
+        public async Task<IActionResult> Index(string search)
         {
+            // Carrega produtos do endpoint
+            if (!_context.Produtos.Any())
+            {
+                var produtosExternos = await _produtoService.ObterProdutosAsync();
+
+                foreach (var produto in produtosExternos)
+                {
+                    if (!_context.Produtos.Any(p => p.idProduto == produto.idProduto))
+                    {
+                        _context.Produtos.Add(produto);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+            }
+
             var produtos = _context.Produtos.AsQueryable();
 
             if (!string.IsNullOrEmpty(search))
